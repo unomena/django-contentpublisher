@@ -22,7 +22,7 @@ class ContentUpgrade(models.Model):
     #==========================================================================
     class Meta:
         ordering = ('-date_time',)
-        unique_together = (('object_content_type','object_id'),)
+#        unique_together = (('object_content_type','object_id'),)
     
     #--------------------------------------------------------------------------
     def __unicode__(self):
