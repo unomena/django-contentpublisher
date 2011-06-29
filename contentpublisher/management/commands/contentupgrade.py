@@ -36,9 +36,10 @@ class Command(BaseCommand):
         if not sql_only:
             cursor = connections[using].cursor()
         
-        for content_upgrade in ContentUpgrade.objects.filter(must_publish=True).order_by('-date_time'):
+        for content_upgrade in ContentUpgrade.objects.filter(must_publish=True).order_by('date_time'):
             print content_upgrade.sql
             if not sql_only:
-                cursor.execute("SELECT foo FROM bar WHERE baz = %s", [self.baz])
+                cursor.execute(content_upgrade.sql)
                 transaction.commit_unless_managed(using=using)
                 content_upgrade.delete()
+                print 'content upgraded'
