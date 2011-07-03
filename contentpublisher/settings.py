@@ -5,4 +5,4 @@ Created on 21 Jun 2011
 '''
 CONTENT_STAGING = True
 
-CONTENT_PUBLISH_DATABASE = 'production'
+DEFAULT_CONTENT_PUBLISH_DATABASE = 'production'
