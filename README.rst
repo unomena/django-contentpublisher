@@ -19,5 +19,4 @@ models.signals.m2m_changed.connect(track_m2m_changed_object, sender=ModelBase.si
 
 Upgrade some content.
 
-Run management command: 'upgradecontent --sql-only' to check what's going to happen.
-Run management command: 'upgradecontent' to upgrade to database 'production'
+Run management command: 'upgradecontent' to upgrade content
