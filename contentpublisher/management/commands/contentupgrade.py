@@ -56,9 +56,14 @@ class Command(BaseCommand):
                 print content_item.sql
                 
             if can_upgrade and execute:
-                cursor.execute(content_item.sql)
-                transaction.commit_unless_managed(using=using)
-                content_item.delete()
-                print 'content upgraded'
+                try:
+                    cursor.execute(content_item.sql)
+                    transaction.commit_unless_managed(using=using)
+                    content_item.delete()
+                    print 'content upgraded'
+                except:
+                    print 'content upgrade failed'
+                    content_item.must_publish=False
+                    content_item.save()
                 
                 
