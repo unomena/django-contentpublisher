@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-contentpublisher',
-    version='0.0.5',
+    version='0.0.6',
     description='Django qa publishing app.',
     long_description = open('README.rst', 'r').read(),
     author='Unomena',
@@ -19,4 +19,5 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
+    zip_safe=False,
 )
