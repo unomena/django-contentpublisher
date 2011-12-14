@@ -27,9 +27,17 @@ def track_object(instance):
         db.reset_queries()
         
     if sqls:
-        ContentUpgrade.objects.create(object_content_type=ContentType.objects.get_for_model(instance.__class__),
-                                      object_id=instance.id, 
-                                      sql='%s;' % ';\n'.join(sqls))
+        try:
+            cu = ContentUpgrade.objects.get(object_content_type=ContentType.objects.get_for_model(instance.__class__),
+                                      object_id=instance.id)
+            cu.sql = '%s;' % ';\n'.join(sqls)
+            cu.must_publish = True
+            cu.save()
+            
+        except ContentUpgrade.DoesNotExist:
+            ContentUpgrade.objects.create(object_content_type=ContentType.objects.get_for_model(instance.__class__),
+                                          object_id=instance.id, 
+                                          sql='%s;' % ';\n'.join(sqls))
 
 #------------------------------------------------------------------------------
 def track_saved_object(sender, instance, created, **kwargs):
