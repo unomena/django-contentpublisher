@@ -2,13 +2,23 @@
 
 {% block title %}Content Upgrades{% endblock %}
 
+{% block extra_top_js %}
+    <script type="text/javascript">
+        function toggle_cu_item_publish(item_id){
+        	
+            jQuery.get('/contentpublisher/item/'+item_id+'/toggle/', function(data){
+            	jQuery('#id_cu_'+item_id).html(data);
+            });
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 	{% if object_list %}
-		<table>
+		<table width="100%" style="background:white; color:black;">
 		    <thead>
 		        <tr>
 		            <th>Title</th>
-		            <th>Description</th>
 		            <th>Date / Time</th>
 		            <th>URL</th>
 		            <th>Publish Approved</th>
@@ -17,11 +27,10 @@
 		    <tbody>
 		        {% for item in object_list %}
 			        <tr>
-			            <td>{{ item.object.title }}</td>
-			            <td>{{ item.object.description }}</td>
-			            <td>{{ item.date_time }}</td>
-			            <td><a href="{{ item.object.get_absolute_url }}">{{ item.object.get_absolute_url }}</a></td>
-			            <td>{{ item.must_publish }}</td>
+			            <td><center>{{ item.object.title }}</center></td>
+			            <td><center>{{ item.date_time }}</center></td>
+			            <td><center><a href="{{ item.object.get_absolute_url }}">{{ item.object.get_absolute_url }}</a></center></td>
+			            <td><center><a href="#" onclick="javascript:toggle_cu_item_publish({{ item.id }});" id="id_cu_{{ item.id }}">{{ item.must_publish }}</a></center></td>
 			        </tr>
 		        {% endfor %}
 		    </tbody>

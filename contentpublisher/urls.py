@@ -21,4 +21,8 @@ urlpatterns = patterns('contentpublisher.views',
                        ),
         name='content_publisher_content_list'),
         
+    url(r'^item/(?P<item_id>\d+)/toggle/$',
+        'toggle_item',
+        name='content_publisher_item_toggle'),
+        
 )
