@@ -14,28 +14,35 @@
 {% endblock %}
 
 {% block content %}
-	{% if object_list %}
-		<table width="100%" style="background:white; color:black;">
-		    <thead>
-		        <tr>
-		            <th>Title</th>
-		            <th>Date / Time</th>
-		            <th>URL</th>
-		            <th>Publish Approved</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		        {% for item in object_list %}
-			        <tr>
-			            <td><center>{{ item.object.title }}</center></td>
-			            <td><center>{{ item.date_time }}</center></td>
-			            <td><center><a href="{{ item.object.get_absolute_url }}">{{ item.object.get_absolute_url }}</a></center></td>
-			            <td><center><a href="#" onclick="javascript:toggle_cu_item_publish({{ item.id }});" id="id_cu_{{ item.id }}">{{ item.must_publish }}</a></center></td>
-			        </tr>
-		        {% endfor %}
-		    </tbody>
-		</table>
-	{% else %}
-	    <center>Sorry, there are no pending content upgrades.</center>
-	{% endif %}
+	<div class="content">
+		<div class="console">
+			<h1>KFC Live Content Publishing</h1>
+			<div class="console_body">
+				{% if object_list %}
+					<table class="contentpublisher">
+					    <thead>
+					        <tr>
+					            <th class="cp_title">Title</th>
+					            <th class="cp_date">Date / Time</th>
+					            <th class="cp_url">URL</th>
+					            <th class="cp_publish">Publish Approved</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        {% for item in object_list %}
+						        <tr>
+						            <td>{{ item.object.title }}</td>
+						            <td>{{ item.date_time }}</td>
+						            <td><a href="{{ item.object.get_absolute_url }}" target="_blank">{{ item.object.get_absolute_url }}</a></td>
+						            <td><a href="#" onclick="javascript:toggle_cu_item_publish({{ item.id }});" id="id_cu_{{ item.id }}">{{ item.must_publish }}</a></td>
+						        </tr>
+					        {% endfor %}
+					    </tbody>
+					</table>
+				{% else %}
+				    <p>Sorry, there are no pending content upgrades.</p>
+				{% endif %}
+			</div>
+		</div><!--/console-->
+	</div><!--/content-->
 {% endblock %}
