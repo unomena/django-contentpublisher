@@ -15,7 +15,7 @@ from contentpublisher import models
 
 urlpatterns = patterns('contentpublisher.views',
                        
-    url(r'^contentpublisher/$',
+    url(r'^/$',
         login_required(generic_views.ListView.as_view(queryset=models.ContentUpgrade.objects.all(),
                                                       template_name='contentpublisher/content_list.html')
                        ),
