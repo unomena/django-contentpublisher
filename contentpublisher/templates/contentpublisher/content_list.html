@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Content Upgrades{% endblock %}
+
+{% block content %}
+	{% if object_list %}
+		<table>
+		    <thead>
+		        <tr>
+		            <th>Title</th>
+		            <th>Description</th>
+		            <th>Date / Time</th>
+		            <th>URL</th>
+		            <th>Publish Approved</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        {% for item in object_list %}
+			        <tr>
+			            <td>{{ item.object.title }}</td>
+			            <td>{{ item.object.description }}</td>
+			            <td>{{ item.date_time }}</td>
+			            <td><a href="{{ item.object.get_absolute_url }}">{{ item.object.get_absolute_url }}</a></td>
+			            <td>{{ item.must_publish }}</td>
+			        </tr>
+		        {% endfor %}
+		    </tbody>
+		</table>
+	{% else %}
+	    <center>Sorry, there are no pending content upgrades.</center>
+	{% endif %}
+{% endblock %}
