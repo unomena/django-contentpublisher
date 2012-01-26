@@ -14,6 +14,7 @@ def check_sql(sql):
     return not sql.startswith('SELECT') and \
         not sql.startswith('INSERT INTO "django_admin_log"') and \
         not 'contentpublisher_contentupgrade' in sql and \
+        not 'contentpublisher_contentm2mupgrade' in sql and \
         not 'SAVEPOINT' in sql
         
 #------------------------------------------------------------------------------
