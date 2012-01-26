@@ -39,7 +39,7 @@ class Command(BaseCommand):
         content = ContentUpgrade.objects.filter(must_publish=True).order_by('date_time')
         m2m_content = ContentM2MUpgrade.objects.filter(must_publish=True).order_by('date_time')
         
-        if content or m2m:
+        if content or m2m_content:
             if settings.DATABASES.has_key(using):
                 print 'Will upgrade %d records to database %s' % (content.count() + m2m_content.count(), using)
                 can_upgrade = True
