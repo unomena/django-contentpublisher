@@ -7,7 +7,7 @@ from django import db
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
-from contentpublisher.models import ContentUpgrade
+from contentpublisher.models import ContentUpgrade, ContentM2MUpgrade
 
 #------------------------------------------------------------------------------
 def check_sql(sql):
@@ -51,7 +51,26 @@ def track_m2m_changed_object(sender, instance, **kwargs):
     """
     Track a saved object
     """
-    track_object(instance)
+    sqls = []
+    if settings.CONTENT_STAGING:
+        for q in db.connection.queries:
+            if check_sql(q['sql']) and q['sql'] not in sqls:
+                sqls.append(q['sql'])
+                
+        db.reset_queries()
+        
+    if sqls:
+        try:
+            cu = ContentM2MUpgrade.objects.get(object_content_type=ContentType.objects.get_for_model(instance.__class__),
+                                      object_id=instance.id)
+            cu.sql = '%s;' % ';\n'.join(sqls)
+            cu.must_publish = True
+            cu.save()
+            
+        except ContentM2MUpgrade.DoesNotExist:
+            ContentM2MUpgrade.objects.create(object_content_type=ContentType.objects.get_for_model(instance.__class__),
+                                          object_id=instance.id, 
+                                          sql='%s;' % ';\n'.join(sqls))
 
 #------------------------------------------------------------------------------
 def track_deleted_object(sender, instance, **kwargs):
