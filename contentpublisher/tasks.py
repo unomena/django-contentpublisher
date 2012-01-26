@@ -61,17 +61,9 @@ def track_m2m_changed_object(sender, instance, **kwargs):
         db.reset_queries()
         
     if sqls:
-        try:
-            cu = ContentM2MUpgrade.objects.get(object_content_type=ContentType.objects.get_for_model(instance.__class__),
-                                      object_id=instance.id)
-            cu.sql = '%s;' % ';\n'.join(sqls)
-            cu.must_publish = True
-            cu.save()
-            
-        except ContentM2MUpgrade.DoesNotExist:
-            ContentM2MUpgrade.objects.create(object_content_type=ContentType.objects.get_for_model(instance.__class__),
-                                          object_id=instance.id, 
-                                          sql='%s;' % ';\n'.join(sqls))
+        ContentM2MUpgrade.objects.create(object_content_type=ContentType.objects.get_for_model(instance.__class__),
+                                         object_id=instance.id, 
+                                         sql='%s;' % ';\n'.join(sqls))
 
 #------------------------------------------------------------------------------
 def track_deleted_object(sender, instance, **kwargs):

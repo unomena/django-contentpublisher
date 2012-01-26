@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-contentpublisher',
-    version='0.0.17',
+    version='0.0.18',
     description='Django qa publishing app.',
     long_description = open('README.rst', 'r').read(),
     author='Unomena',
